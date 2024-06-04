@@ -18,3 +18,5 @@ use \App\Http\Controllers\LavaroUsersController;
 //    return $request->user();
 //});
 Route::post("/lavaro-users/store", [LavaroUsersController::class, "store"]);
+Route::get("/lavaro-users/search-by-email/{email}", [LavaroUsersController::class, "getByEmail"]);
+Route::post("/lavaro-users/login", [LavaroUsersController::class, "getByEmailandPassword"]);

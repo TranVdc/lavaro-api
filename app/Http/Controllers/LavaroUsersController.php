@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\LavaroUsers;
 use App\Http\Requests\StoreLavaroUsersRequest;
 use App\Http\Requests\UpdateLavaroUsersRequest;
+use Illuminate\Http\Request;
 
 class LavaroUsersController extends Controller
 {
@@ -45,6 +46,29 @@ class LavaroUsersController extends Controller
     public function show(LavaroUsers $lavaroUsers)
     {
         //
+    }
+
+
+    /**
+     * Display the specified resource.
+     */
+    public function getByEmail($email)
+    {
+        $user = LavaroUsers::where('email', $email)->first();
+        $json = ['status' => 0, 'message' => 'user not found'];
+        if($user) {
+            $json = ['status' => 1, 'message' => 'user found'];
+        }
+        return response()->json($json, 200);
+    }
+
+    public function getByEmailandPassword(Request $request) {
+        $user = LavaroUsers::where('email', $request->email)->where('password', $request->password)->first();
+        $json = ['status' => 0, 'data' => [], 'message' => 'user not found'];
+        if($user) {
+            $json = ['status' => 1, 'data' => $user, 'message' => 'user found'];
+        }
+        return response()->json($json, 200);
     }
 
     /**
