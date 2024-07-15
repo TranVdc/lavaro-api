@@ -63,4 +63,13 @@ class CoursesController extends Controller
     {
         //
     }
+
+    public function getCoursesWithLimit($limit = 10) {
+        $courses = Courses::orderBy('id', 'desc')->limit($limit)->get();
+        $json = ['status' => 0, 'data' => [], 'message' => 'user not found'];
+        if($courses) {
+            $json = ['status' => 1, 'data' => $courses, 'message' => 'user found'];
+        }
+        return response()->json($json, 200);
+    }
 }
